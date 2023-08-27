@@ -1,0 +1,19 @@
+{
+  "name": "flashliquidity-acs",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "compile": "forge build",
+    "test": "forge test",
+    "coverage": "forge coverage",
+    "slither": "slither .",
+    "lint": "solhint 'contracts/*.sol'",
+    "lint-fix": "solhint 'contracts/**/*.sol' --fix",
+    "format": "forge fmt contracts/**/*.sol && forge fmt test/**/*.sol",
+    "format-check": "forge fmt --check"
+  },
+  "devDependencies": {
+    "solhint": "^3.4.1",
+    "solhint-plugin-prettier": "^0.0.5"
+  }
+}
