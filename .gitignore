@@ -4,7 +4,6 @@
 
 # hardhat
 foundry-cache
-foundry-lib
 out
 node_modules
 
