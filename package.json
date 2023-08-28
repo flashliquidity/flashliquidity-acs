@@ -1,6 +1,6 @@
 {
   "name": "flashliquidity-acs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "repository": "https://github.com/flashliquidity/flashliquidity-acs.git",
   "scripts": {
