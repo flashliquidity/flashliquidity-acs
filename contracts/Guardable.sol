@@ -51,7 +51,7 @@ abstract contract Guardable is IGuardable {
         return s_isGuardian[guardian];
     }
 
-    function isGuardian(address guardian) public view returns (bool) {
+    function isGuardian(address guardian) external view returns (bool) {
         return _isGuardian(guardian);
     }
 }

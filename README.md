@@ -2,6 +2,10 @@
 
 FlashLiquidity access control contracts
 
+## Requirements
+
+- [foundry](https://book.getfoundry.sh/getting-started/installation)
+
 ## Install Dependencies
 
 `yarn`

@@ -1,12 +1,13 @@
 {
   "name": "flashliquidity-acs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "repository": "https://github.com/flashliquidity/flashliquidity-acs.git",
   "scripts": {
     "compile": "forge build",
     "test": "forge test",
     "coverage": "forge coverage",
+    "gas-report": "forge snapshot --gas-report",
     "slither": "slither .",
     "lint": "solhint 'contracts/*.sol'",
     "lint-fix": "solhint 'contracts/**/*.sol' --fix",

@@ -58,7 +58,7 @@ contract GovernableTest is Test {
         vm.expectRevert(Governable.Governable__NotAuthorized.selector);
         governable.transferGovernance();
         vm.warp(block.timestamp + TRANSFER_GOVERNANCE_DELAY + 1);
-        vm.prank(governor);
+        vm.prank(bob);
         governable.transferGovernance();
         assertEq(governable.getGovernor(), bob);
     }

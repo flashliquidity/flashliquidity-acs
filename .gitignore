@@ -3,9 +3,12 @@
 .vscode
 
 # hardhat
+node_modules
+
+# foundry
 foundry-cache
 out
-node_modules
+.gas-snapshot
 
 # don't push the environment vars!
 .env

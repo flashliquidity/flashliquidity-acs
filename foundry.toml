@@ -7,6 +7,6 @@ via_ir = false
 libs = ['node_modules', 'foundry-lib']
 test = 'test'
 cache_path  = 'foundry-cache'
-gas_reports = ["Governable", "CrossChainGovernable", "Guardian"]
+gas_reports = ["Governable", "CrossChainGovernableMock", "GuardableMock"]
 bytecode_hash = "none"
 ffi = false
