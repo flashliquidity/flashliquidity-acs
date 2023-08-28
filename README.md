@@ -8,7 +8,7 @@ FlashLiquidity access control contracts
 
 ## Install Dependencies
 
-`yarn`
+`yarn setup`
 
 ## Compile Contracts
 
