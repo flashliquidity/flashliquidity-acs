@@ -33,9 +33,7 @@ contract Governable is IGovernable {
 
     /// @inheritdoc IGovernable
     function setPendingGovernor(address pendingGovernor) external onlyGovernor {
-        if (pendingGovernor == address(0)) {
-            revert Governable__ZeroAddress();
-        }
+        if (pendingGovernor == address(0)) revert Governable__ZeroAddress();
         s_pendingGovernor = pendingGovernor;
         s_govTransferReqTimestamp = uint64(block.timestamp);
         emit PendingGovernorChanged(pendingGovernor);
@@ -46,12 +44,8 @@ contract Governable is IGovernable {
         address newGovernor = s_pendingGovernor;
         address oldGovernor = s_governor;
         uint64 govTransferReqTimestamp = s_govTransferReqTimestamp;
-        if (msg.sender != oldGovernor && msg.sender != newGovernor) {
-            revert Governable__NotAuthorized();
-        }
-        if (newGovernor == address(0)) {
-            revert Governable__ZeroAddress();
-        }
+        if (msg.sender != oldGovernor && msg.sender != newGovernor) revert Governable__NotAuthorized();
+        if (newGovernor == address(0)) revert Governable__ZeroAddress();
         if (block.timestamp - govTransferReqTimestamp < TRANSFER_GOVERNANCE_DELAY) {
             revert Governable__TooEarly(govTransferReqTimestamp + TRANSFER_GOVERNANCE_DELAY);
         }
@@ -61,9 +55,7 @@ contract Governable is IGovernable {
     }
 
     function _revertIfNotGovernor() internal view {
-        if (msg.sender != s_governor) {
-            revert Governable__NotAuthorized();
-        }
+        if (msg.sender != s_governor) revert Governable__NotAuthorized();
     }
 
     function _getGovernor() internal view returns (address) {

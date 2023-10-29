@@ -12,4 +12,6 @@ contract GuardableMock is Guardable {
     }
 
     function shouldRevertIfNotGuardian() external onlyGuardian {}
+
+    function shouldRevertIfCursedGuardian() external onlyNotCursed {}
 }

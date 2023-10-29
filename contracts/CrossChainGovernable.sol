@@ -48,12 +48,8 @@ abstract contract CrossChainGovernable is ICrossChainGovernable {
      * @dev revert if pending governor is address(0) or if chainSelector is zero
      */
     function _setPendingGovernor(address pendingGovernor, uint64 pendingGovernorChainSelector) internal {
-        if (pendingGovernor == address(0)) {
-            revert CrossChainGovernable__ZeroAddress();
-        }
-        if (pendingGovernorChainSelector == 0) {
-            revert CrossChainGovernable__ZeroChainSelector();
-        }
+        if (pendingGovernor == address(0)) revert CrossChainGovernable__ZeroAddress();
+        if (pendingGovernorChainSelector == 0) revert CrossChainGovernable__ZeroChainSelector();
         s_pendingGovernor = pendingGovernor;
         s_pendingGovernorChainSelector = pendingGovernorChainSelector;
         s_govTransferReqTimestamp = uint64(block.timestamp);
@@ -66,21 +62,15 @@ abstract contract CrossChainGovernable is ICrossChainGovernable {
     function _transferGovernance() internal {
         address newGovernor = s_pendingGovernor;
         uint64 newGovernorChainSelector = s_pendingGovernorChainSelector;
-        if (newGovernor == address(0)) {
-            revert CrossChainGovernable__ZeroAddress();
-        }
-        if (block.timestamp - s_govTransferReqTimestamp < TRANSFER_GOVERNANCE_DELAY) {
-            revert CrossChainGovernable__TooEarly();
-        }
+        if (newGovernor == address(0)) revert CrossChainGovernable__ZeroAddress();
+        if (block.timestamp - s_govTransferReqTimestamp < TRANSFER_GOVERNANCE_DELAY) revert CrossChainGovernable__TooEarly();
         s_pendingGovernor = address(0);
         s_governor = newGovernor;
         emit CrossChainGovernorChanged(newGovernor, newGovernorChainSelector);
     }
 
     function _revertIfNotCrossChainGovernor(address sender, uint64 chainSelector) internal view {
-        if (sender != s_governor || chainSelector != s_governorChainSelector) {
-            revert CrossChainGovernable__NotAuthorized();
-        }
+        if (sender != s_governor || chainSelector != s_governorChainSelector) revert CrossChainGovernable__NotAuthorized();
     }
 
     function _getGovernor() internal view returns (address) {

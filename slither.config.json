@@ -4,6 +4,6 @@
   "exclude_medium": false,
   "exclude_high": false,
   "disable_color": false,
-  "filter_paths": "(test/|foundry-lib/)",
+  "filter_paths": "(test/|lib/)",
   "legacy_ast": false
 }

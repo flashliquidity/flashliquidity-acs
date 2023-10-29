@@ -9,9 +9,7 @@ interface IGovernable {
      */
     function setPendingGovernor(address pendingGovernor) external;
 
-    /**
-     * @notice Promote the pending governor to the governor role.
-     */
+    /// @notice Promote the pending governor to the governor role.
     function transferGovernance() external;
 
     function getGovernor() external view returns (address);

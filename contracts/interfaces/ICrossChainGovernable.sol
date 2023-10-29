@@ -10,9 +10,7 @@ interface ICrossChainGovernable {
      */
     function setPendingGovernor(address pendingGovernor, uint64 pendingGovernorChainSelector) external;
 
-    /**
-     * @notice Promote the pending governor to the governor role.
-     */
+    /// @notice Promote the pending governor to the governor role.
     function transferGovernance() external;
 
     function getGovernor() external view returns (address);
