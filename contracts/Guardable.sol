@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.22;
 
 import {IGuardable} from "./interfaces/IGuardable.sol";
 
@@ -18,7 +18,7 @@ abstract contract Guardable is IGuardable {
     error Guardable__CannotBreakCurse();
 
     uint256 private s_guardianCount;
-    mapping(address => bool) internal s_isGuardian;
+    mapping(address => bool) private s_isGuardian;
     mapping(address guardian => uint256 curses) private s_curses;
     mapping(address guardianCursing => mapping(address guardianCursed => bool hasCursed)) private s_hasCursed;
 
@@ -45,47 +45,50 @@ abstract contract Guardable is IGuardable {
     /// @inheritdoc IGuardable
     function setGuardians(address[] calldata guardians, bool[] calldata enableds) external virtual;
 
-    /// @dev revert if guarians and enableds arrays are not the same length
+    /// @dev revert if guardians and enableds arrays are not the same length
     function _setGuardians(address[] calldata guardians, bool[] calldata enableds) internal {
         if (guardians.length != enableds.length) revert Guardable__InconsistentParamsLength();
         bool isAlreadyGuardian;
         bool isEnabled;
         address guardian;
         uint256 guardiansLength = guardians.length;
-        for (uint256 i; i < guardiansLength;) {
+        for (uint256 i; i < guardiansLength; ++i) {
             guardian = guardians[i];
             isAlreadyGuardian = s_isGuardian[guardian];
             isEnabled = enableds[i];
             if(isAlreadyGuardian && !isEnabled) {
-                --s_guardianCount;
+                unchecked {
+                    --s_guardianCount;
+                }
             } else if(!isAlreadyGuardian && isEnabled) {
-                ++s_guardianCount;
+                unchecked {
+                    ++s_guardianCount;
+                }
             }
             s_isGuardian[guardian] = isEnabled;
-            unchecked {
-                ++i;
-            }
         }
         emit GuardiansChanged(guardians, enableds);
     }
 
     /// @inheritdoc IGuardable
     function curse(address guardian) external onlyGuardian onlyNotCursed {
-        if (_isGuardianCursed(msg.sender)) revert Guardable__CursedGuardian();
         if (!_isGuardian(guardian)) revert Guardable__InvalidCurseTarget();
         if (msg.sender == guardian) revert Guardable__SelfCurse();
         if (s_hasCursed[msg.sender][guardian]) revert Guardable__AlreadyCursed();
         s_hasCursed[msg.sender][guardian] = true;
-        ++s_curses[guardian];
+        unchecked {
+            ++s_curses[guardian];
+        }
         emit Cursed(guardian, msg.sender);
     }
 
     /// @inheritdoc IGuardable
-    function revokeCurse(address guardian) external onlyGuardian {
-        if (_isGuardianCursed(msg.sender)) revert Guardable__CursedGuardian();
+    function revokeCurse(address guardian) external onlyGuardian onlyNotCursed {
         if (!s_hasCursed[msg.sender][guardian]) revert Guardable__NotCursed();
         s_hasCursed[msg.sender][guardian] = false;
-        --s_curses[guardian];
+        unchecked {
+            --s_curses[guardian];
+        }
         emit CurseRevoked(guardian, msg.sender);
     }
 
@@ -94,7 +97,9 @@ abstract contract Guardable is IGuardable {
         if (!s_hasCursed[caster][msg.sender]) revert Guardable__NotCursed();
         if (_isGuardian(caster)) revert Guardable__CannotBreakCurse();
         s_hasCursed[caster][msg.sender] = false;
-        --s_curses[msg.sender];
+        unchecked {
+            --s_curses[msg.sender];
+        }
         emit CurseBroken(msg.sender, caster);
     }
 

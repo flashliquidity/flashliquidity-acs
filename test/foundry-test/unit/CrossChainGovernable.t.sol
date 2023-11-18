@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.19;
+pragma solidity 0.8.22;
 
 import {Test} from "forge-std/Test.sol";
 import {Vm} from "forge-std/Vm.sol";
@@ -19,7 +19,6 @@ contract CrossChainGovernableTest is Test {
 
     function setUp() public {
         vm.prank(governor);
-        vm.warp(1696969691);
         ccGovernable = new CrossChainGovernableMock(governor, governorChainSelector);
     }
 
@@ -33,7 +32,7 @@ contract CrossChainGovernableTest is Test {
         ccGovernable.setPendingGovernor(bob, anotherChainSelector);
         assertEq(ccGovernable.getPendingGovernor(), bob);
         assertEq(ccGovernable.getPendingGovernorChainSelector(), anotherChainSelector);
-        assertEq(ccGovernable.getGovTransferReqTimestamp(), 1696969691);
+        assertEq(ccGovernable.getGovTransferReqTimestamp(), block.timestamp);
     }
 
     function testGovernorTransferGovernance() public {

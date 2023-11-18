@@ -1,7 +1,7 @@
 [profile.default]
 src = 'contracts'
 out = 'out'
-solc_version = '0.8.19'
+solc_version = '0.8.22'
 optimizer_runs = 1000000
 via_ir = false
 libs = ['node_modules', 'lib']
@@ -10,3 +10,4 @@ cache_path  = 'cache'
 gas_reports = ["Governable", "CrossChainGovernableMock", "GuardableMock"]
 bytecode_hash = "none"
 ffi = false
+
