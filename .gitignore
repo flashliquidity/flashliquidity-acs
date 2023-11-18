@@ -7,6 +7,7 @@ node_modules
 
 # foundry
 foundry-cache
+cache
 out
 .gas-snapshot
 
